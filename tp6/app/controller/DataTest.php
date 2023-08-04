@@ -23,17 +23,41 @@ class DataTest extends BaseController
 
     public function index()
     {
-//        $user = Db::connect('grade')
-//            ->table('tp_user')
-//            ->select();
-////        dump($user);
-//        dd($user);
-
-        $user = Db::connect('demo')->table('tp_user')->select();
-        return json($user);
 
 
-        //$user = Db::connect('mysql')->table('tp_user')->select();
+//        $user = Db::connect('demo')->table('tp_user')->select();
+//        return json($user);
+//        $user = Db::table('tp_user')->where('id', 27)->find();
+//        $user = Db::getLastSql();
+//        $user = Db::table('tp_user')->where('id', 1)->findOrFail();
+//        $user = Db::table('tp_user')->where('id', 1)->findOrEmpty();
+        /**
+         * 数据集查询
+         */
+//        $user = Db::table('tp_user')->select();
+//        $user = Db::table('tp_user')->select()->toArray();
+        /**
+         * 其他查询
+         */
+//        $user = Db::name('user')->where('id', 27)->value('username');
+//        $user = Db::name('user')->column('username','id');
+//      $user =  Db::table('tp_user')->chunk(3,function ($users){
+//            foreach ($users as $user){
+//                dump($user);
+//            }
+//           echo 1;
+//        });
+
+        $users = Db::table('tp_user')->cursor();
+        foreach ($users as $user) {
+            dump($user);
+        }
+
+
+        /**
+         * sql
+         */
+//        $user = Db::connect('mysql')->table('tp_user')->select();
         //$user = Db::table('tp_user')->where('id', 27)->find();
         //return Db::getLastSql();
         //$user = Db::table('tp_user')->where('id', 527)->findOrFail();
@@ -75,22 +99,25 @@ class DataTest extends BaseController
 
         //$user = Db::name('user')->json(['list'])->find(287);
         //$user = Db::name('user')->json(['list'])->where('list->username', '小红')->find();
-//        return json($user);
+        return json($user);
     }
 
-    public function demo()
+    public
+    function demo()
     {
         $user = Db::connect('demo')->table('tp_user')->select();
         return json($user);
     }
 
-    public function getUser()
+    public
+    function getUser()
     {
         $user = User::select();
         return json($user);
     }
 
-    public function insert()
+    public
+    function insert()
     {
         $data = [
             'username' => '千羽',
@@ -112,7 +139,8 @@ class DataTest extends BaseController
 
     }
 
-    public function insertAll()
+    public
+    function insertAll()
     {
         $dataAll = [
             [
@@ -138,7 +166,8 @@ class DataTest extends BaseController
         return Db::name('user')->insertAll($dataAll);
     }
 
-    public function update()
+    public
+    function update()
     {
 //        $data = [
 //            'username'      =>      '李白'
@@ -172,14 +201,16 @@ class DataTest extends BaseController
 
     }
 
-    public function delete()
+    public
+    function delete()
     {
         //return Db::name('user')->delete(232);
         //return Db::name('user')->delete([229,230,231]);
         return Db::name('user')->where('id', 228)->delete();
     }
 
-    public function query()
+    public
+    function query()
     {
         //$user = Db::name('user')->where('id', '=', 76)->find();
         //$user = Db::name('user')->where('id', 76)->find();
@@ -201,7 +232,8 @@ class DataTest extends BaseController
         return json($user);
     }
 
-    public function time()
+    public
+    function time()
     {
         //$user = Db::name('user')->where('create_time', '>', '2018-1-1')->select();
         //$user = Db::name('user')->where('create_time', 'not between', ['2019-1-1', '2019-12-1'])->select();
@@ -219,7 +251,8 @@ class DataTest extends BaseController
         //return json($user);
     }
 
-    public function poly()
+    public
+    function poly()
     {
         //$result = Db::name('user')->count();
         //$result = Db::name('user')->count('uid');
@@ -246,7 +279,8 @@ class DataTest extends BaseController
         return json($result);
     }
 
-    public function linkUp()
+    public
+    function linkUp()
     {
         //$user = Db::name('user')->where('id', '>', 70)->select();
 
@@ -280,7 +314,8 @@ class DataTest extends BaseController
         return json($user);
     }
 
-    public function linkDown()
+    public
+    function linkDown()
     {
         //$user = Db::name('user')->limit(5)->select();
         //$user = Db::name('user')->limit(2,5)->select();
@@ -304,7 +339,8 @@ class DataTest extends BaseController
         return json($user);
     }
 
-    public function advanced()
+    public
+    function advanced()
     {
 //        $user = Db::name('user')
 //                    ->where('username|email', 'like', '%xiao%')
@@ -357,7 +393,8 @@ class DataTest extends BaseController
         return json($user);
     }
 
-    public function speedy()
+    public
+    function speedy()
     {
 //        $user = Db::name('user')
 //                    ->whereColumn('update_time', '=', 'create_time')
@@ -379,7 +416,8 @@ class DataTest extends BaseController
         return json($user);
     }
 
-    public function getter()
+    public
+    function getter()
     {
 //        Db::Transaction(function () {
 //            Db::name('user')->where('id', 19)->save(['price'=>Db::raw('price + 3')]);
@@ -404,7 +442,8 @@ class DataTest extends BaseController
         return json($user);
     }
 
-    public function collection()
+    public
+    function collection()
     {
         $user = Db::name('user')->select();
 
