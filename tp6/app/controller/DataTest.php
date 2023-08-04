@@ -102,8 +102,7 @@ class DataTest extends BaseController
         return json($user);
     }
 
-    public
-    function demo()
+    public function demo()
     {
         $user = Db::connect('demo')->table('tp_user')->select();
         return json($user);
@@ -114,6 +113,16 @@ class DataTest extends BaseController
     {
         $user = User::select();
         return json($user);
+    }
+
+    public function manySelect()
+    {
+        $userQuery = Db::name('user');
+        $dataFind = $userQuery->where('id', 27)->find();
+        $res = $userQuery->select();
+        return json($dataFind);
+
+
     }
 
     public
