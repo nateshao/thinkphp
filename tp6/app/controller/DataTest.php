@@ -121,8 +121,6 @@ class DataTest extends BaseController
         $dataFind = $userQuery->where('id', 27)->find();
         $res = $userQuery->select();
         return json($dataFind);
-
-
     }
 
     public
