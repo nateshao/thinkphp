@@ -20,12 +20,17 @@ class DataTest extends BaseController
 //            echo '修改被执行...';
 //        });
 //    }
-
+    /** http://127.0.0.1:8000/datatest/index
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function index()
     {
 
 
-//        $user = Db::connect('demo')->table('tp_user')->select();
+        $user = Db::connect('demo')->table('tp_user')->select();
 //        return json($user);
 //        $user = Db::table('tp_user')->where('id', 27)->find();
 //        $user = Db::getLastSql();
@@ -47,12 +52,6 @@ class DataTest extends BaseController
 //            }
 //           echo 1;
 //        });
-
-        $users = Db::table('tp_user')->cursor();
-        foreach ($users as $user) {
-            dump($user);
-        }
-
 
         /**
          * sql
@@ -102,12 +101,23 @@ class DataTest extends BaseController
         return json($user);
     }
 
+    /** http://127.0.0.1:8000/datatest/demo
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     */
     public function demo()
     {
         $user = Db::connect('demo')->table('tp_user')->select();
         return json($user);
     }
 
+    /** http://127.0.0.1:8000/datatest/getUser
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public
     function getUser()
     {
@@ -115,6 +125,12 @@ class DataTest extends BaseController
         return json($user);
     }
 
+    /** http://127.0.0.1:8000/datatest/manySelect
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function manySelect()
     {
         $userQuery = Db::name('user');
@@ -123,6 +139,9 @@ class DataTest extends BaseController
         return json($dataFind);
     }
 
+    /** http://127.0.0.1:8000/datatest/insert
+     * @return int|string
+     */
     public
     function insert()
     {
@@ -146,6 +165,9 @@ class DataTest extends BaseController
 
     }
 
+    /** http://127.0.0.1:8000/datatest/insertAll
+     * @return int
+     */
     public
     function insertAll()
     {
@@ -173,17 +195,21 @@ class DataTest extends BaseController
         return Db::name('user')->insertAll($dataAll);
     }
 
+    /** http://127.0.0.1:8000/datatest/update
+     * @return int
+     * @throws \think\db\exception\DbException
+     */
     public
     function update()
     {
 //        $data = [
-//            'username'      =>      '李白'
+//            'username'      =>      '千羽'
 //        ];
-//        return Db::name('user')->where('id', 228)->update($data);
+//        return Db::name('user')->where('id', 301)->update($data);
 
 //        $data = [
-//            'id'            =>      228,
-//            'username'      =>      '李黑'
+//            'id'            =>      301,
+//            'username'      =>      '马崇濠'
 //        ];
 //        return Db::name('user')->update($data);
 
@@ -195,16 +221,37 @@ class DataTest extends BaseController
 //                                     ->inc('price')
 //                                     ->dec('status', 2)
 //                                     ->update();
-        return Db::name('user')->where('id', 301)
-            ->update([
-                'email' => Db::raw('UPPER(email)'),
-                'price' => Db::raw('price + 1'),
-                'status' => Db::raw('status - 2')
-            ]);
+//        return Db::name('user')->where('id', 301)
+//            ->update([
+//                'email' => Db::raw('UPPER(email)'),
+//                'price' => Db::raw('price + 1'),
+//                'status' => Db::raw('status - 2')
+//            ]);
 
         //$data['list'] = ['username'=>'李白', 'gender'=>'男', 'email'=>'libai@163.com'];
         //$data['list->username'] = '李黑';
         //return Db::name('user')->where('id', 287)->json(['list'])->save($data);
+        /**
+         * 更新操作
+         */
+        //        $data =[
+        //            'username'=>'腾讯集团',
+        //        ];
+        //        return Db::name('user')->where('id',309)->update($data);
+        //        $data =[
+        //            'id'=>'308',
+        //            'username'=>'阿里集团',
+        //        ];
+        //        return Db::name('user') ->update($data);
+//        return Db::name('user')->where('id', 306)->exp('email', 'UPPER(email)')
+//            ->update();
+        $res = Db::name('us er')->where('id', 232)
+            ->update([
+                'email' => Db::raw('UPPER(email)'),
+                'price' => Db::raw('price+100'),
+                'status' => Db::raw('status-3'),
+            ]);
+        return $res;
 
     }
 
@@ -216,76 +263,97 @@ class DataTest extends BaseController
         return Db::name('user')->where('id', 228)->delete();
     }
 
+    /** http://127.0.0.1:8000/datatest/query
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public
     function query()
     {
-        //$user = Db::name('user')->where('id', '=', 76)->find();
-        //$user = Db::name('user')->where('id', 76)->find();
-        //$user = Db::name('user')->where('id', '<>', 19)->select();
-        //$user = Db::name('user')->where('email', 'like', 'xiao%')->select();
-        //$user = Db::name('user')->where('email', 'like', ['xiao%', 'wu%'], 'or')->select();
-        //$user = Db::name('user')->whereLike('email', 'xiao%')->select();
-        //$user = Db::name('user')->whereNotLike('email', 'xiao%')->select();
-        //$user = Db::name('user')->where('id', 'between', '21,27')->select();
-        //$user = Db::name('user')->where('id', 'between', [21,27])->select();
-        //$user = Db::name('user')->whereBetween('id', [21,27])->select();
-        //$user = Db::name('user')->where('id', 'in', '25,26,29')->select();
-        //$user = Db::name('user')->where('uid', 'null')->select();
-        //$user = Db::name('user')->where('uid', 'not null')->select();
-        //$user = Db::name('user')->where('id', 'in', '19,21,22')->select();
+//        $user = Db::name('user')->where('id', '=', 76)->find();
+//        $user = Db::name('user')->where('id', 76)->find();
+//        $user = Db::name('user')->where('id', '<>', 19)->select();
+//        $user = Db::name('user')->where('email', 'like', 'xiao%')->select();
+//        $user = Db::name('user')->where('email', 'like', ['xiao%', 'wu%'], 'or')->select();
+//        $user = Db::name('user')->whereLike('email', 'xiao%')->select();
+//        $user = Db::name('user')->whereNotLike('email', 'xiao%')->select();
+//        $user = Db::name('user')->where('id', 'between', '21,27')->select();
+//        $user = Db::name('user')->where('id', 'between', [21,27])->select();
+//        $user = Db::name('user')->whereBetween('id', [21,27])->select();
+//        $user = Db::name('user')->where('id', 'in', '25,26,29')->select();
+//        $user = Db::name('user')->where('uid', 'null')->select();
+//        $user = Db::name('user')->where('uid', 'not null')->select();
+//        $user = Db::name('user')->where('id', 'in', '19,21,22')->select();
         $user = Db::name('user')->where('id', 'exp', 'IN (19,21,22)')->select();
 
-        //return Db::getLastSql();
+        return Db::getLastSql();
         return json($user);
     }
 
+    /** http://127.0.0.1:8000/datatest/time
+     * @return string
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public
     function time()
     {
-        //$user = Db::name('user')->where('create_time', '>', '2018-1-1')->select();
-        //$user = Db::name('user')->where('create_time', 'not between', ['2019-1-1', '2019-12-1'])->select();
-        //$user = Db::name('user')->whereTime('create_time', '>', '2018-1-1')->select();
-        //$user = Db::name('user')->whereBetween('create_time', ['2019-1-1', '2019-12-1'])->select();
-        //$user = Db::name('user')->whereBetweenTime('create_time', '2019-1-1', '2019-12-1')->select();
+//        $user = Db::name('user')->where('create_time', '>', '2018-1-1')->select();
+//        $user = Db::name('user')->where('create_time', 'not between', ['2019-1-1', '2019-12-1'])->select();
+//        $user = Db::name('user')->whereTime('create_time', '>', '2018-1-1')->select();
+//        $user = Db::name('user')->whereBetween('create_time', ['2019-1-1', '2019-12-1'])->select();
+//        $user = Db::name('user')->whereBetweenTime('create_time', '2019-1-1', '2019-12-1')->select();
 
-        //$user = Db::name('user')->whereYear('create_time')->select();
-        //$user = Db::name('user')->whereYear('create_time', 'last year')->select();
-        //$user = Db::name('user')->whereYear('create_time', '2016')->select();
-        //$user = Db::name('user')->whereTime('create_time', '-2 hours')->select();
+//        $user = Db::name('user')->whereYear('create_time')->select();
+//        $user = Db::name('user')->whereYear('create_time', 'last year')->select();
+//        $user = Db::name('user')->whereYear('create_time', '2016')->select();
+//        $user = Db::name('user')->whereTime('create_time', '-2 hours')->select();
         $user = Db::name('user')->whereBetweenTimeField('create_time', 'update_time')->select();
 
         return Db::getLastSql();
-        //return json($user);
+        return json($user);
     }
 
+    /** http://127.0.0.1:8000/datatest/poly
+     * @return \think\response\Json
+     */
     public
     function poly()
     {
-        //$result = Db::name('user')->count();
-        //$result = Db::name('user')->count('uid');
-        //$result = Db::name('user')->max('price');
-        //$result = Db::name('user')->min('price');
-        //$result = Db::name('user')->min('email', false);
-        //$result = Db::name('user')->max('email', false);
-        //$result = Db::name('user')->avg('price');
-        //$result = Db::name('user')->sum('price');
-        //$result = Db::name('user')->fetchSql(true)->select();
-        //$result = Db::name('user')->buildSql(true);
+//        $result = Db::name('user')->count();
+//        $result = Db::name('user')->count('uid');
+//        $result = Db::name('user')->max('price');
+//        $result = Db::name('user')->min('price');
+//        $result = Db::name('user')->min('email', false);
+//        $result = Db::name('user')->max('email', false);
+//        $result = Db::name('user')->avg('price');
+//        $result = Db::name('user')->sum('price');
+//        $result = Db::name('user')->fetchSql(true)->select();
+//        $result = Db::name('user')->buildSql(true);
 
         //求出所有男的uid
-        //$subQuery = Db::name('two')->field('uid')->where('gender', '男')->buildSql(true);
-        //$result = Db::name('one')->where('id', 'exp', 'IN '.$subQuery)->select();
+//        $subQuery = Db::name('two')->field('uid')->where('gender', '男')->buildSql(true);
+//        $result = Db::name('one')->where('id', 'exp', 'IN '.$subQuery)->select();
 
-//        $result = Db::name('one')->where('id', 'in', function ($query) {
-//            $query->name('two')->field('uid')->where('gender', '男');
-//        })->select();
+        $result = Db::name('one')->where('id', 'in', function ($query) {
+            $query->name('two')->field('uid')->where('gender', '男');
+        })->select();
 
         //$result = Db::query('SELECT * FROM tp_user');
-        $result = Db::execute('UPDATE tp_user SET username="孙武" WHERE id=29');
+//        $result = Db::execute('UPDATE tp_user SET username="孙武" WHERE id=29');
         //return Db::getLastSql();
         return json($result);
     }
 
+    /** http://127.0.0.1:8000/datatest/linkUp
+     * @return string|\think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public
     function linkUp()
     {
