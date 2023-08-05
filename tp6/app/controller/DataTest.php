@@ -118,8 +118,7 @@ class DataTest extends BaseController
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public
-    function getUser()
+    public function getUser()
     {
         $user = User::select();
         return json($user);
@@ -142,8 +141,7 @@ class DataTest extends BaseController
     /** http://127.0.0.1:8000/datatest/insert
      * @return int|string
      */
-    public
-    function insert()
+    public function insert()
     {
         $data = [
             'username' => '千羽',
@@ -168,8 +166,7 @@ class DataTest extends BaseController
     /** http://127.0.0.1:8000/datatest/insertAll
      * @return int
      */
-    public
-    function insertAll()
+    public function insertAll()
     {
         $dataAll = [
             [
@@ -199,8 +196,7 @@ class DataTest extends BaseController
      * @return int
      * @throws \think\db\exception\DbException
      */
-    public
-    function update()
+    public function update()
     {
 //        $data = [
 //            'username'      =>      '千羽'
@@ -255,8 +251,7 @@ class DataTest extends BaseController
 
     }
 
-    public
-    function delete()
+    public function delete()
     {
         //return Db::name('user')->delete(232);
         //return Db::name('user')->delete([229,230,231]);
@@ -269,8 +264,7 @@ class DataTest extends BaseController
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public
-    function query()
+    public function query()
     {
 //        $user = Db::name('user')->where('id', '=', 76)->find();
 //        $user = Db::name('user')->where('id', 76)->find();
@@ -298,8 +292,7 @@ class DataTest extends BaseController
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public
-    function time()
+    public function time()
     {
 //        $user = Db::name('user')->where('create_time', '>', '2018-1-1')->select();
 //        $user = Db::name('user')->where('create_time', 'not between', ['2019-1-1', '2019-12-1'])->select();
@@ -320,8 +313,7 @@ class DataTest extends BaseController
     /** http://127.0.0.1:8000/datatest/poly
      * @return \think\response\Json
      */
-    public
-    function poly()
+    public function poly()
     {
 //        $result = Db::name('user')->count();
 //        $result = Db::name('user')->count('uid');
@@ -354,8 +346,7 @@ class DataTest extends BaseController
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public
-    function linkUp()
+    public function linkUp()
     {
         //$user = Db::name('user')->where('id', '>', 70)->select();
 
@@ -389,11 +380,16 @@ class DataTest extends BaseController
         return json($user);
     }
 
-    public
-    function linkDown()
+    /** http://127.0.0.1:8000/datatest/linkDown
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function linkDown()
     {
-        //$user = Db::name('user')->limit(5)->select();
-        //$user = Db::name('user')->limit(2,5)->select();
+//        $user = Db::name('user')->limit(5)->select();
+        $user = Db::name('user')->limit(2, 5)->select();
         //$user = Db::name('user')->limit(0,5)->select();
         //$user = Db::name('user')->limit(5,5)->select();
         //$user = Db::name('user')->page(2,5)->select();
@@ -404,18 +400,17 @@ class DataTest extends BaseController
 
         //$user = Db::name('user')->field('gender, SUM(price)')->group('gender')->select();
         //$user = Db::name('user')->field('gender, SUM(price)')->group('gender,password')->select();
-        $user = Db::name('user')
-            ->field('gender, SUM(price)')
-            ->group('gender')
-            ->having('SUM(price) > 600')
-            ->select();
+//        $user = Db::name('user')
+//            ->field('gender, SUM(price)')
+//            ->group('gender')
+//            ->having('SUM(price) > 600')
+//            ->select();
 
         //return Db::getLastSql();
         return json($user);
     }
 
-    public
-    function advanced()
+    public function advanced()
     {
 //        $user = Db::name('user')
 //                    ->where('username|email', 'like', '%xiao%')
