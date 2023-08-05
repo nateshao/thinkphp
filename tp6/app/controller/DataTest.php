@@ -280,9 +280,14 @@ class DataTest extends BaseController
 //        $user = Db::name('user')->where('uid', 'null')->select();
 //        $user = Db::name('user')->where('uid', 'not null')->select();
 //        $user = Db::name('user')->where('id', 'in', '19,21,22')->select();
-        $user = Db::name('user')->where('id', 'exp', 'IN (19,21,22)')->select();
-
-        return Db::getLastSql();
+//        $user = Db::name('user')->where('id', 'exp', 'IN (19,21,22)')->select();
+        /**
+         * 闭包查询
+         */
+        $user = Db::name('user')->where('id', 'in', function ($query) {
+            $query->name('two')->where('gender', '男')->field('uid');
+        })->select();
+//        return Db::getLastSql();
         return json($user);
     }
 
@@ -341,6 +346,10 @@ class DataTest extends BaseController
     }
 
     /** http://127.0.0.1:8000/datatest/linkUp
+     * where表达式查询
+     * field()方法，可以指定要查询
+     * alias()方法，给数据库起一个别名；
+     * 15.链式查询方法.上
      * @return string|\think\response\Json
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -374,7 +383,7 @@ class DataTest extends BaseController
         //$user = Db::name('user')->fieldRaw('id,SUM(price)')->select();
         //$user = Db::name('user')->field(true)->select();
         //$user = Db::name('user')->withoutField('details')->select();
-
+        // alias()方法，给数据库起一个别名；
         $user = Db::name('user')->alias('a')->select();
         return Db::getLastSql();
         return json($user);
@@ -389,17 +398,17 @@ class DataTest extends BaseController
     public function linkDown()
     {
 //        $user = Db::name('user')->limit(5)->select();
-        $user = Db::name('user')->limit(2, 5)->select();
-        //$user = Db::name('user')->limit(0,5)->select();
-        //$user = Db::name('user')->limit(5,5)->select();
-        //$user = Db::name('user')->page(2,5)->select();
+//        $user = Db::name('user')->limit(2, 5)->select(); // 从第3条开始算
+//        $user = Db::name('user')->limit(0,5)->select(); // 从第1条开始算
+//        $user = Db::name('user')->limit(5,5)->select(); // 从第6条开始算
+//        $user = Db::name('user')->page(2,5)->select();
 
-        //$user = Db::name('user')->order('id', 'desc')->select();
-        //$user = Db::name('user')->order(['create_time'=>'desc', 'price'=>'asc'])->select();
-        //$user = Db::name('user')->orderRaw('FIELD(username, "樱桃小丸子") DESC')->select();
+//        $user = Db::name('user')->order('id', 'asc')->select(); // asc升序,即:从小到大排序
+//        $user = Db::name('user')->order(['create_time'=>'desc', 'price'=>'asc'])->select();
+//        $user = Db::name('user')->orderRaw('FIELD(username, "樱桃小丸子") DESC')->select();
 
-        //$user = Db::name('user')->field('gender, SUM(price)')->group('gender')->select();
-        //$user = Db::name('user')->field('gender, SUM(price)')->group('gender,password')->select();
+//        $user = Db::name('user')->field('gender, SUM(price)')->group('gender')->select();
+        $user = Db::name('user')->field('gender, SUM(price)')->group('gender,password')->select();
 //        $user = Db::name('user')
 //            ->field('gender, SUM(price)')
 //            ->group('gender')
@@ -410,6 +419,12 @@ class DataTest extends BaseController
         return json($user);
     }
 
+    /** http://127.0.0.1:8000/datatest/advanced
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function advanced()
     {
 //        $user = Db::name('user')
@@ -463,8 +478,7 @@ class DataTest extends BaseController
         return json($user);
     }
 
-    public
-    function speedy()
+    public function speedy()
     {
 //        $user = Db::name('user')
 //                    ->whereColumn('update_time', '=', 'create_time')
@@ -486,8 +500,7 @@ class DataTest extends BaseController
         return json($user);
     }
 
-    public
-    function getter()
+    public function getter()
     {
 //        Db::Transaction(function () {
 //            Db::name('user')->where('id', 19)->save(['price'=>Db::raw('price + 3')]);
@@ -512,8 +525,7 @@ class DataTest extends BaseController
         return json($user);
     }
 
-    public
-    function collection()
+    public function collection()
     {
         $user = Db::name('user')->select();
 
