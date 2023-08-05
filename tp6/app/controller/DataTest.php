@@ -357,8 +357,9 @@ class DataTest extends BaseController
      */
     public function linkUp()
     {
+        // 表达式查询，就是 where()方法的基础查询方式；
         //$user = Db::name('user')->where('id', '>', 70)->select();
-
+        // 关联数组查询，通过键值对来数组键值对匹配的查询方式；
 //        $user = Db::name('user')->where([
 //            'gender'    =>      '男',
 //            'price'     =>      100
@@ -374,8 +375,8 @@ class DataTest extends BaseController
 //        $map[] = ['price', 'in', [60,70,80]];
 //        $user = Db::name('user')->where($map)->select();
 
-        //$user = Db::name('user')->whereRaw('gender="男" AND price IN (60,70,80)')->select();
-        //$user = Db::name('user')->whereRaw('id=:id', ['id'=>19])->select();
+//        $user = Db::name('user')->whereRaw('gender="男" AND price IN (60,70,80)')->select();
+        $user = Db::name('user')->whereRaw('id=:id', ['id'=>19])->select();
 
         //$user = Db::name('user')->field('*')->select();
         //$user = Db::name('user')->field('id,username,email')->select();
@@ -384,8 +385,8 @@ class DataTest extends BaseController
         //$user = Db::name('user')->field(true)->select();
         //$user = Db::name('user')->withoutField('details')->select();
         // alias()方法，给数据库起一个别名；
-        $user = Db::name('user')->alias('a')->select();
-        return Db::getLastSql();
+//        $user = Db::name('user')->alias('a')->select();
+//        return Db::getLastSql();
         return json($user);
     }
 
@@ -427,10 +428,10 @@ class DataTest extends BaseController
      */
     public function advanced()
     {
-//        $user = Db::name('user')
-//                    ->where('username|email', 'like', '%xiao%')
-//                    ->where('price&uid', '>', 0)
-//                    ->select();
+        $user = Db::name('user')
+                    ->where('username|email', 'like', '%xiao%')
+                    ->where('price&uid', '>', 0)
+                    ->select();
 
 //        $user = Db::name('user')->where([
 //            ['id', '>', 0],
@@ -469,12 +470,12 @@ class DataTest extends BaseController
 //                    ->whereRaw('(username LIKE "%小%" AND status=1) OR id>0')
 //                    ->select();
 
-        $user = Db::name('user')
-            ->whereRaw('(username LIKE :username AND status=:status) OR id>:id',
-                ['username' => '%小%', 'status' => 1, 'id' => 0])
-            ->select();
+//        $user = Db::name('user')
+//            ->whereRaw('(username LIKE :username AND status=:status) OR id>:id',
+//                ['username' => '%小%', 'status' => 1, 'id' => 0])
+//            ->select();
 
-        //return Db::getLastSql();
+        // return Db::getLastSql();
         return json($user);
     }
 
