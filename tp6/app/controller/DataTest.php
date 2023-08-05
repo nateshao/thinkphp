@@ -421,6 +421,7 @@ class DataTest extends BaseController
     }
 
     /** http://127.0.0.1:8000/datatest/advanced
+     * 数据库的高级查询
      * @return \think\response\Json
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -428,10 +429,15 @@ class DataTest extends BaseController
      */
     public function advanced()
     {
-        $user = Db::name('user')
-                    ->where('username|email', 'like', '%xiao%')
-                    ->where('price&uid', '>', 0)
-                    ->select();
+//        $user = Db::name('user')
+//                    ->where('username|email', 'like', '%xiao%')
+//                    ->where('price&uid', '>', 0)
+//                    ->select();
+        /**
+         * 生成的 SQL
+         * SELECT * FROM `tp_user` WHERE ( `username` LIKE '%xiao%' OR `email` LIKE '%xiao%' )
+         * AND ( `price` > 0 AND `uid` >
+         */
 
 //        $user = Db::name('user')->where([
 //            ['id', '>', 0],
@@ -439,6 +445,12 @@ class DataTest extends BaseController
 //            ['price', 'exp', Db::raw('>=80')],
 //            ['email', 'like', '%163%']
 //        ])->select();
+
+        /**
+         * 生成的 SQL
+         * SELECT * FROM `tp_user` WHERE `id` > 0 AND `status` = 1
+         * AND ( `price` >=80 ) AND `email` LIKE '%163%'
+         */
 
 //        $map = [
 //            ['id', '>', 0],
@@ -449,6 +461,10 @@ class DataTest extends BaseController
 //                ->where([$map])
 //                ->where('status', 1)
 //                ->select();
+        /** 生成的 SQL
+         * SELECT * FROM `tp_user` WHERE ( `id` > 0 AND ( `price` >=80 )
+         * AND `email` LIKE '%163%' ) AND `status` = 1
+         */
 
 //        $map1 = [
 //            ['username', 'like', '%小%'],
@@ -459,23 +475,36 @@ class DataTest extends BaseController
 //            ['email', 'like', '%.com%']
 //        ];
 //        $user = Db::name('user')->whereOr([$map1, $map2])->select();
-
+        /** 生成的 SQL
+         * SELECT * FROM `tp_user` WHERE ( `username` LIKE '%小%' AND `email` LIKE '%163%' )
+         * OR ( `username` LIKE '%孙%' AND `email` LIKE '%.com%' )
+         */
+        // 闭包查询可以连缀，会自动加上括号，更清晰，如果是 OR，请用 whereOR()
 //        $user = Db::name('user')->where(function ($query) {
 //            $query->where('id', '>', 0);
 //        })->whereOr(function ($query) {
 //            $query->where('username', 'like', '%小%');
 //        })->select();
+        /**
+         * SELECT * FROM `tp_user` WHERE ( `id` > 0 ) OR ( `username` LIKE '%小%' )
+         */
 
 //        $user = Db::name('user')
 //                    ->whereRaw('(username LIKE "%小%" AND status=1) OR id>0')
 //                    ->select();
+        /**
+         * SELECT * FROM `tp_user` WHERE ( (username LIKE "%小%" AND status=1) OR id>0 )
+         */
 
-//        $user = Db::name('user')
-//            ->whereRaw('(username LIKE :username AND status=:status) OR id>:id',
-//                ['username' => '%小%', 'status' => 1, 'id' => 0])
-//            ->select();
+        $user = Db::name('user')
+            ->whereRaw('(username LIKE :username AND status=:status) OR id>:id',
+                ['username' => '%小%', 'status' => 1, 'id' => 0])
+            ->select();
+        /**
+         * SELECT * FROM `tp_user` WHERE ( (username LIKE '%小%' AND status=1) OR id>0 )
+         */
 
-        // return Db::getLastSql();
+//         return Db::getLastSql();
         return json($user);
     }
 
@@ -490,6 +519,7 @@ class DataTest extends BaseController
 
         //$user = Db::name('user')->getByEmail('xiaoxin@163.com');
         //$user = Db::name('user')->getFieldByEmail('xiaoxin@163.com', 'username');
+
 
         $user = Db::name('user')->when(false, function ($query) {
             $query->where('id', '>', 0);
