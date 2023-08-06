@@ -5,14 +5,20 @@ use think\facade\Db;
 
 class DataModel
 {
+    /** http://127.0.0.1:8000/DataModel/index
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function index()
     {
-        //UserModel::select();
-        //return json(User::select());
-        //return json(UserModel::find(288));
-        //$user = UserModel::find(288);
-        //$user = UserModel::where('list->username', '小红')->find();
-        //echo $user->list->username;
+//        UserModel::select();
+        return json(UserModel::select());
+//        return json(UserModel::find(302));
+//        $user = UserModel::find(288);
+//        $user = UserModel::where('list->username', '小红')->find();
+//        echo $user->list->username;
     }
 
     public function insert()
