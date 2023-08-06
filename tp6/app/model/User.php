@@ -6,6 +6,11 @@ use think\model\concern\SoftDelete;
 class User extends Model
 {
 
+    public function index()
+    {
+        return json(User::select());
+    }
+
     //一对一
 //    public function profile()
 //    {
