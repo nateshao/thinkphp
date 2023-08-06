@@ -108,8 +108,9 @@ class DataTest extends BaseController
      */
     public function demo()
     {
-        $user = Db::connect('demo')->table('tp_user')->select();
-        return json($user);
+//        $user = Db::connect('demo')->table('tp_user')->select();
+//        return json($user);
+        return "aaaa";
     }
 
     /** http://127.0.0.1:8000/datatest/getUser
@@ -376,7 +377,7 @@ class DataTest extends BaseController
 //        $user = Db::name('user')->where($map)->select();
 
 //        $user = Db::name('user')->whereRaw('gender="男" AND price IN (60,70,80)')->select();
-        $user = Db::name('user')->whereRaw('id=:id', ['id'=>19])->select();
+        $user = Db::name('user')->whereRaw('id=:id', ['id' => 19])->select();
 
         //$user = Db::name('user')->field('*')->select();
         //$user = Db::name('user')->field('id,username,email')->select();
@@ -508,29 +509,42 @@ class DataTest extends BaseController
         return json($user);
     }
 
+    /** 19. 数据库的事务和获取器
+     * http://127.0.0.1:8000/dataTest/speedy
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function speedy()
     {
 //        $user = Db::name('user')
 //                    ->whereColumn('update_time', '=', 'create_time')
 //                    ->select();
 
-        //$user = Db::name('user')->whereEmail('xiaoxin@163.com')->find();
-        //$user = Db::name('user')->whereUsername('蜡笔小新')->find();
+//        $user = Db::name('user')->whereEmail('xiaoxin@163.com')->find();
+//        $user = Db::name('user')->whereUsername('蜡笔小新')->find();
 
-        //$user = Db::name('user')->getByEmail('xiaoxin@163.com');
-        //$user = Db::name('user')->getFieldByEmail('xiaoxin@163.com', 'username');
+//        $user = Db::name('user')->getByEmail('xiaoxin@163.com');
+//        $user = Db::name('user')->getFieldByEmail('xiaoxin@163.com', 'username');
 
-
+        // 启动事务
         $user = Db::name('user')->when(false, function ($query) {
             $query->where('id', '>', 0);
         }, function ($query) {
             $query->where('username', 'like', '%小%');
         })->select();
+        /**
+         * sql打印：SELECT * FROM `tp_user` WHERE `username` LIKE '%小%'
+         */
 
         return Db::getLastSql();
         return json($user);
     }
 
+    /** http://127.0.0.1:8000/dataTest/getter
+     * @return \think\response\Json
+     */
     public function getter()
     {
 //        Db::Transaction(function () {
@@ -540,9 +554,8 @@ class DataTest extends BaseController
 
 //        Db::startTrans();
 //        try {
-//            Db::name('user')->where('id', 19)->save(['price'=>Db::raw('price + 3')]);
-//            Db::name('user1')->where('id', 20)->save(['price'=>Db::raw('price - 3')]);
-//
+//            Db::name('user')->where('id', 19)->save(['price' => Db::raw('price + 3')]);
+//            Db::name('user1')->where('id', 20)->save(['price' => Db::raw('price - 3')]);
 //            Db::commit();
 //        } catch (\Exception $e) {
 //            echo '执行SQL失败，开始回滚数据';
@@ -556,13 +569,18 @@ class DataTest extends BaseController
         return json($user);
     }
 
+    /** http://127.0.0.1:8000/dataTest/collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function collection()
     {
         $user = Db::name('user')->select();
 
-        //var_dump($user->toArray());
-        //dump($user->shuffle());
-        //dump($user->pop());
+//        var_dump($user->toArray());
+//        dump($user->shuffle());
+//        dump($user->pop());
         dump($user->whereIn('id', [19, 20, 21]));
     }
 }
