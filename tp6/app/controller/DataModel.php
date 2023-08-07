@@ -188,26 +188,26 @@ class DataModel
 //                        ->select();
 //        return json($user);
 
-        $user = UserModel::where('id', 19)->value('username');
-        return json($user);
+//        $user = UserModel::where('id', 19)->value('username');
+//        return json($user);
 
-        //$user = UserModel::whereIn('id', [19,20,21])->column('username', 'id');
-        //return json($user);
+//        $user = UserModel::whereIn('id', [19,20,21])->column('username', 'id');
+//        return json($user);
 
-        //return json(UserModel::getByUsername('辉夜'));
-        //return json(UserModel::max('price'));
+//        return json(UserModel::getByUsername('辉夜'));
+//        return json(UserModel::max('price'));
 
-//        UserModel::chunk(5, function ($users) {
+//        UserModel::chunk(302, function ($users) {
 //            foreach ($users as $user) {
 //                echo $user->username;
 //            }
 //            echo '<br>...<br>';
 //        });
 
-//        foreach (UserModel::where('status', 1)->cursor() as $user) {
-//            echo $user->username;
-//            echo '<br>...<br>';
-//        }
+        foreach (UserModel::where('status', 1)->cursor() as $user) {
+            echo $user->username;
+            echo '<br>...<br>';
+        }
 
     }
 
