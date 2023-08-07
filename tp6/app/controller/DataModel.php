@@ -124,6 +124,9 @@ class DataModel
         });
     }
 
+    /** http://127.0.0.1:8000/DataModel/update
+     * @throws \Exception
+     */
     public function update()
     {
 //        $user = UserModel::find(267);
@@ -131,16 +134,16 @@ class DataModel
 //        $user->email    = 'lihong@163.com';
 //        $user->price    = Db::raw('price + 1');
 //        //$user->price    = 200;
-//        //dump($user->allowField(['username','price'])->force()->save());
+//        //dump($user->allowField(['username','price'])->force()->save()); // 允许要写入的字段，其它字段就无法写入了；
 //        $user->readonly(['username', 'email'])->save();
 
-//        $user = new UserModel();
-//        $list = [
-//            ['id'=>237, 'username'=>'白+黑', 'email'=>'baihei@163.com'],
-//            ['id'=>250, 'username'=>'白+黑', 'email'=>'baihei@163.com'],
-//            ['id'=>251, 'username'=>'白+黑', 'email'=>'baihei@163.com'],
-//        ];
-//        $user->saveAll($list);
+        $user = new UserModel();
+        $list = [
+            ['id'=>237, 'username'=>'白+黑', 'email'=>'baihei@163.com'],
+            ['id'=>250, 'username'=>'白+黑', 'email'=>'baihei@163.com'],
+            ['id'=>251, 'username'=>'白+黑', 'email'=>'baihei@163.com'],
+        ];
+        $user->saveAll($list);
 
 //        UserModel::update([
 //            'id'        =>      251,
@@ -153,10 +156,10 @@ class DataModel
 //            'email'     =>      'libai@163.com'
 //        ], ['id'=>250]);
 
-        UserModel::update([
-            'username' => '李黑',
-            'email' => 'lihei@163.com'
-        ], ['id' => 301], ['username']);
+//        UserModel::update([
+//            'username' => '李黑',
+//            'email' => 'lihei@163.com'
+//        ], ['id' => 301], ['username']);
 
 //        $user = UserModel::find(288);
 //        $user->list->username = '小白';
