@@ -64,22 +64,22 @@ class DataModel
 
         $dataAll = [
             [
-                'username'     =>       '李白1',
-                'password'     =>       '123',
-                'gender'       =>       '男',
-                'email'        =>       'libai@163.com',
-                'price'        =>       100,
-                'details'      =>       '123',
-                'uid'          =>       1011,
+                'username' => '李白1',
+                'password' => '123',
+                'gender' => '男',
+                'email' => 'libai@163.com',
+                'price' => 100,
+                'details' => '123',
+                'uid' => 1011,
             ],
             [
-                'username'     =>       '李白2',
-                'password'     =>       '123',
-                'gender'       =>       '男',
-                'email'        =>       'libai@163.com',
-                'price'        =>       100,
-                'details'      =>       '123',
-                'uid'          =>       1011,
+                'username' => '李白2',
+                'password' => '123',
+                'gender' => '男',
+                'email' => 'libai@163.com',
+                'price' => 100,
+                'details' => '123',
+                'uid' => 1011,
             ]
         ];
         $user = new UserModel();
@@ -125,6 +125,7 @@ class DataModel
     }
 
     /** http://127.0.0.1:8000/DataModel/update
+     * 23. 模型的数据更新
      * @throws \Exception
      */
     public function update()
@@ -139,9 +140,9 @@ class DataModel
 
         $user = new UserModel();
         $list = [
-            ['id'=>237, 'username'=>'白+黑', 'email'=>'baihei@163.com'],
-            ['id'=>250, 'username'=>'白+黑', 'email'=>'baihei@163.com'],
-            ['id'=>251, 'username'=>'白+黑', 'email'=>'baihei@163.com'],
+            ['id' => 237, 'username' => '白+黑', 'email' => 'baihei@163.com'],
+            ['id' => 250, 'username' => '白+黑', 'email' => 'baihei@163.com'],
+            ['id' => 251, 'username' => '白+黑', 'email' => 'baihei@163.com'],
         ];
         $user->saveAll($list);
 
@@ -211,6 +212,11 @@ class DataModel
 
     }
 
+    /** http://127.0.0.1:8000/DataModel/field
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function field()
     {
         //UserModel::select();
@@ -225,6 +231,12 @@ class DataModel
 //        echo $user->getUsername();
     }
 
+    /** http://127.0.0.1:8000/DataModel/getAttr
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function getAttr()
     {
         $user = UserModel::withAttr('email', function ($value) {
@@ -233,26 +245,27 @@ class DataModel
         //echo $user->status;
         //echo $user->nothing;
         //echo $user->getData('status');
+//        return Db::getLastSql(); // SELECT * FROM `tp_user` WHERE `id` = 19 LIMIT 1
         return json($user);
         //return json($user->getData());
     }
 
     public function scope()
     {
-        //$result = UserModel::scope('male')->select();
-        //$result = UserModel::male()->select();
+//        $result = UserModel::scope('male')->select();
+//        $result = UserModel::male()->select();
 
-        //$result = UserModel::scope('email', 'xiao')->select();
-        //$result = UserModel::email('xiao')->select();
+//        $result = UserModel::scope('email', 'xiao')->select();
+//        $result = UserModel::email('xiao')->select();
 
 //        $result = UserModel::scope('email', 'xiao')
 //                           ->scope('price', 80)->select();
 
-        //$result = UserModel::email('xiao')->price(80)->select();
+//        $result = UserModel::email('xiao')->price(80)->select();
 
-        UserModel::withoutGlobalScope(['status'])->select();
+        $result = UserModel::withoutGlobalScope(['status'])->select();
 
-        return Db::getLastSql();
+//        return Db::getLastSql();
         return json($result);
     }
 
