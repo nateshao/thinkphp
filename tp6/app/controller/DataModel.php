@@ -213,6 +213,7 @@ class DataModel
     }
 
     /** http://127.0.0.1:8000/DataModel/field
+     * 25. 模型的字段设置
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -269,14 +270,19 @@ class DataModel
         return json($result);
     }
 
+    /** http://127.0.0.1:8000/DataModel/search
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function search()
     {
-        $result = UserModel::withSearch(['email', 'create_time' => 'ctime'], [
-            'email' => 'xiao',
-            'ctime' => ['2014-1-1', '2017-1-1'],
+        $result = UserModel::withSearch(
+            ['email', 'create_time' => 'ctime'],
+            ['email' => 'xiao', 'ctime' => ['2014-1-1', '2017-1-1'],
             'sort' => ['price' => 'desc']
         ])->where('gender', '男')->select();
-
 
         //return Db::getLastSql();
         return json($result->hidden(['username', 'details'])
@@ -287,6 +293,11 @@ class DataModel
             }));
     }
 
+    /** int(0) string(5) "70.00" string(19) "2016-06-27 16:55:56"
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function typec()
     {
         $user = UserModel::find(20);
