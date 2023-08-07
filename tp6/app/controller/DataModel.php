@@ -29,13 +29,13 @@ class DataModel
     public function insert()
     {
 //        $user = new UserModel();
-//        $user->username     =       '李白';
-//        $user->password     =       '123';
-//        $user->gender       =       '男';
-//        $user->email        =       'libai@163.com';
-//        $user->price        =       100;
-//        $user->details      =       '123';
-//        $user->uid          =       1011;
+//        $user->username = '大丑';
+//        $user->password = '123';
+//        $user->gender = '男';
+//        $user->email = 'libai@163.com';
+//        $user->price = 100;
+//        $user->details = '123';
+//        $user->uid = 1011;
 //
 //        $list = new \stdClass();
 //        $list->username = '小红';
@@ -46,7 +46,11 @@ class DataModel
 //        $user->isAutoWriteTimestamp(false)->replace()->save();
 //
 //        return Db::getLastSql();
-
+//        /**
+//         * sql 打印
+//         * REPLACE INTO `tp_user` SET `username` = '大丑' , `password` = '123' , `gender` = '男' , `email` = 'libai@163.com' , `price` = 100 , `details` = '123' , `uid` = 1011 ,
+//         * `list` = '{\"username\":\"\\u5c0f\\u7ea2\",\"gender\":\"\\u5973\",\"email\":\"xiaohong@163.com\"}'
+//         */
 //        $user = new UserModel();
 //        $user->allowField(['username', 'password', 'details'])->save([
 //            'username'     =>       '李白',
@@ -58,28 +62,28 @@ class DataModel
 //            'uid'          =>       1011,
 //        ]);
 
-//        $dataAll = [
-//            [
-//                'username'     =>       '李白1',
-//                'password'     =>       '123',
-//                'gender'       =>       '男',
-//                'email'        =>       'libai@163.com',
-//                'price'        =>       100,
-//                'details'      =>       '123',
-//                'uid'          =>       1011,
-//            ],
-//            [
-//                'username'     =>       '李白2',
-//                'password'     =>       '123',
-//                'gender'       =>       '男',
-//                'email'        =>       'libai@163.com',
-//                'price'        =>       100,
-//                'details'      =>       '123',
-//                'uid'          =>       1011,
-//            ]
-//        ];
-//        $user = new UserModel();
-//        dump($user->saveAll($dataAll));
+        $dataAll = [
+            [
+                'username'     =>       '李白1',
+                'password'     =>       '123',
+                'gender'       =>       '男',
+                'email'        =>       'libai@163.com',
+                'price'        =>       100,
+                'details'      =>       '123',
+                'uid'          =>       1011,
+            ],
+            [
+                'username'     =>       '李白2',
+                'password'     =>       '123',
+                'gender'       =>       '男',
+                'email'        =>       'libai@163.com',
+                'price'        =>       100,
+                'details'      =>       '123',
+                'uid'          =>       1011,
+            ]
+        ];
+        $user = new UserModel();
+        dump($user->saveAll($dataAll));
 
 //        $user = UserModel::create([
 //            'username'     =>       '李白',
@@ -91,29 +95,32 @@ class DataModel
 //            'uid'          =>       1011,
 //        ], ['username', 'password', 'details', 'email'], false);
 //        echo $user->id;
-        $data = [
-            'username' => '小丑',
-            'password' => '123',
-            'gender' => '男',
-            'email' => 'libai@163.com',
-            'price' => 100,
-            'details' => '123',
-            'uid' => 1011,
-            'list' => ['username' => '小红', 'gender' => '女', 'email' => 'xiaohong@163.com']
-        ];
-
-        UserModel::create($data);
+//        $data = [
+//            'username' => '小丑',
+//            'password' => '123',
+//            'gender' => '男',
+//            'email' => 'libai@163.com',
+//            'price' => 100,
+//            'details' => '123',
+//            'uid' => 1011,
+//            'list' => ['username' => '小红', 'gender' => '女', 'email' => 'xiaohong@163.com']
+//        ];
+//
+//        UserModel::create($data);
     }
 
+    /**
+     * http://127.0.0.1:8000/DataModel/delete
+     */
     public function delete()
     {
-        //$user = UserModel::find(259);
+//        $user = UserModel::find(259);
         //dump($user->delete());
         //UserModel::destroy(257);
         //UserModel::destroy([254,255,256]);
         //UserModel::where('username', '=', '李黑')->delete();
         UserModel::destroy(function ($query) {
-            $query->where('username', '=', '李黑')->delete();
+            $query->where('username', '=', '大丑')->delete();
         });
     }
 
