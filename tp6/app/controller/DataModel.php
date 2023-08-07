@@ -166,18 +166,21 @@ class DataModel
 //        $user->save();
     }
 
+    /**
+     * http://127.0.0.1:8000/DataModel/select
+     */
     public function select()
     {
-        //$user = UserModel::find(419);
-        //return json($user);
+//        $user = UserModel::find(302);
+//        return json($user);
 
-//        $user = UserModel::findOrEmpty(419);
+//        $user = UserModel::findOrEmpty(21);
 //        if ($user->isEmpty()) {
 //            echo '空的';
 //        }
 
-        //$user = UserModel::select([19,20,21]);
-        //return json($user);
+//        $user = UserModel::select([19,20,21]);
+//        return json($user);
 
 //        $user = UserModel::where('status', 1)
 //                        ->limit(3)
@@ -185,8 +188,8 @@ class DataModel
 //                        ->select();
 //        return json($user);
 
-        //$user = UserModel::where('id', 19)->value('username');
-        //return json($user);
+        $user = UserModel::where('id', 19)->value('username');
+        return json($user);
 
         //$user = UserModel::whereIn('id', [19,20,21])->column('username', 'id');
         //return json($user);
@@ -201,10 +204,10 @@ class DataModel
 //            echo '<br>...<br>';
 //        });
 
-        foreach (UserModel::where('status', 1)->cursor() as $user) {
-            echo $user->username;
-            echo '<br>...<br>';
-        }
+//        foreach (UserModel::where('status', 1)->cursor() as $user) {
+//            echo $user->username;
+//            echo '<br>...<br>';
+//        }
 
     }
 
