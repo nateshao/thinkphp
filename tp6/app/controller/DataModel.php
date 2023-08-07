@@ -1,5 +1,7 @@
 <?php
+
 namespace app\controller;
+
 use app\model\User as UserModel;
 use think\facade\Db;
 
@@ -21,6 +23,9 @@ class DataModel
 //        echo $user->list->username;
     }
 
+    /**
+     * http://127.0.0.1:8000/DataModel/insert
+     */
     public function insert()
     {
 //        $user = new UserModel();
@@ -86,17 +91,18 @@ class DataModel
 //            'uid'          =>       1011,
 //        ], ['username', 'password', 'details', 'email'], false);
 //        echo $user->id;
+        $data = [
+            'username' => '小丑',
+            'password' => '123',
+            'gender' => '男',
+            'email' => 'libai@163.com',
+            'price' => 100,
+            'details' => '123',
+            'uid' => 1011,
+            'list' => ['username' => '小红', 'gender' => '女', 'email' => 'xiaohong@163.com']
+        ];
 
-        UserModel::create([
-            'username'     =>       '李白',
-            'password'     =>       '123',
-            'gender'       =>       '男',
-            'email'        =>       'libai@163.com',
-            'price'        =>       100,
-            'details'      =>       '123',
-            'uid'          =>       1011,
-            'list'         =>       ['username'=>'小红', 'gender'=>'女', 'email'=>'xiaohong@163.com']
-        ]);
+        UserModel::create($data);
     }
 
     public function delete()
@@ -141,9 +147,9 @@ class DataModel
 //        ], ['id'=>250]);
 
         UserModel::update([
-            'username'  =>      '李黑',
-            'email'     =>      'lihei@163.com'
-        ], ['id'=>301], ['username']);
+            'username' => '李黑',
+            'email' => 'lihei@163.com'
+        ], ['id' => 301], ['username']);
 
 //        $user = UserModel::find(288);
 //        $user->list->username = '小白';
@@ -239,20 +245,20 @@ class DataModel
 
     public function search()
     {
-        $result = UserModel::withSearch(['email', 'create_time'=>'ctime'], [
-            'email'         =>      'xiao',
-            'ctime'         =>      ['2014-1-1', '2017-1-1'],
-            'sort'          =>      ['price'=>'desc']
+        $result = UserModel::withSearch(['email', 'create_time' => 'ctime'], [
+            'email' => 'xiao',
+            'ctime' => ['2014-1-1', '2017-1-1'],
+            'sort' => ['price' => 'desc']
         ])->where('gender', '男')->select();
 
 
         //return Db::getLastSql();
         return json($result->hidden(['username', 'details'])
-                           ->visible(['username','email'])
-                           ->append(['nothing'])
-                           ->withAttr('email', function ($value) {
-                               return strtoupper($value);
-                           }));
+            ->visible(['username', 'email'])
+            ->append(['nothing'])
+            ->withAttr('email', function ($value) {
+                return strtoupper($value);
+            }));
     }
 
     public function typec()
@@ -270,7 +276,7 @@ class DataModel
 
         //$user = UserModel::select();
         //return Db::getLastSql();
-       //return json($user);
+        //return json($user);
 
         //$user = UserModel::withTrashed()->select();
         //$user = UserModel::onlyTrashed()->select();
@@ -291,7 +297,6 @@ class DataModel
         //UserModel::onlyTrashed()->find(298)->force()->delete();
 
     }
-
 
 
 }
