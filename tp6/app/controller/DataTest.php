@@ -577,9 +577,12 @@ class DataTest extends BaseController
     public function collection()
     {
         $user = Db::name('user')->select();
-
+        // 转换成数组
 //        var_dump($user->toArray());
+        // 将数据集随机打乱
 //        dump($user->shuffle());
+
+        // 删掉数据中最后一个元素
 //        dump($user->pop());
         dump($user->whereIn('id', [19, 20, 21]));
     }
