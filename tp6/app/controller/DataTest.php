@@ -225,9 +225,10 @@ class DataTest extends BaseController
 //                'status' => Db::raw('status - 2')
 //            ]);
 
-        //$data['list'] = ['username'=>'李白', 'gender'=>'男', 'email'=>'libai@163.com'];
-        //$data['list->username'] = '李黑';
-        //return Db::name('user')->where('id', 287)->json(['list'])->save($data);
+        // 如果想完全修改 json 数据，可以使用如下的方式实
+        $data['list'] = ['username'=>'李白', 'gender'=>'男', 'email'=>'libai@163.com'];
+        $data['list->username'] = '李黑';
+        return Db::name('user')->where('id', 287)->json(['list'])->save($data);
         /**
          * 更新操作
          */
