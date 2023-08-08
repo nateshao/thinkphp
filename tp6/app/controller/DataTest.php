@@ -30,7 +30,7 @@ class DataTest extends BaseController
     {
 
 
-        $user = Db::connect('demo')->table('tp_user')->select();
+//        $user = Db::connect('demo')->table('tp_user')->select();
 //        return json($user);
 //        $user = Db::table('tp_user')->where('id', 27)->find();
 //        $user = Db::getLastSql();
@@ -96,8 +96,8 @@ class DataTest extends BaseController
         //return Db::getLastSql();
         //return json($userSelect);
 
-        //$user = Db::name('user')->json(['list'])->find(287);
-        //$user = Db::name('user')->json(['list'])->where('list->username', '小红')->find();
+//        $user = Db::name('user')->json(['list'])->find(302);
+        $user = Db::name('user')->json(['list'])->where('list->username', '小红')->find();
         return json($user);
     }
 

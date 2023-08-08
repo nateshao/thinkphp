@@ -137,22 +137,28 @@ class User extends Model
 //    }
 
 
-    //搜索器
-//    public function searchEmailAttr($query, $value, $data)
-//    {
-//        $query->where('email', 'like', '%'.$value.'%');
-//        if (isset($data['sort'])) {
-//            $query->order($data['sort']);
-//        }
-//    }
+    /** 搜索器
+     * @param $query
+     * @param $value
+     * @param $data
+     */
+    public function searchEmailAttr($query, $value, $data)
+    {
+        $query->where('email', 'like', '%'.$value.'%');
+        if (isset($data['sort'])) {
+            $query->order($data['sort']);
+        }
+    }
 //
-//    public function searchCreateTimeAttr($query, $value, $data)
-//    {
-//        $query->whereBetweenTime('create_time', $value[0], $value[1]);
-//    }
-
+    public function searchCreateTimeAttr($query, $value, $data)
+    {
+        $query->whereBetweenTime('create_time', $value[0], $value[1]);
+    }
+    /** 29. 模型的自动时间戳和只读字段
+     * @var bool
+     */
     //独立开启自动时间戳写入
-    //protected $autoWriteTimestamp = true;
+    protected $autoWriteTimestamp = true;
 
     //自定义新增和修改的时间戳
     //protected $createTime = 'create_at';
