@@ -233,6 +233,7 @@ class DataModel
     }
 
     /** http://127.0.0.1:8000/DataModel/getAttr
+     * 26. 模型的获取器和修改
      * @return \think\response\Json
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -251,6 +252,41 @@ class DataModel
         //return json($user->getData());
     }
 
+    /** http://127.0.0.1:8000/DataModel/getWithAttr
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getWithAttr()
+    {
+//        $user = UserModel::withAttr('email', function ($value) {
+//            return strtoupper($value);
+//        })->select();
+//        return json($user,200);
+        $user = UserModel::WithAttr('status', function ($value) {
+            $status = [-1 => '删除', 0 => '禁用', 1 => '正常', 2 => '待审核'];
+            return $status[$value];
+        })->select();
+        return json($user);
+    }
+
+    /** http://127.0.0.1:8000/DataModel/getStatusAttr?value=1
+     * @param $value
+     * @return string
+     */
+    public function getStatusAttr($value)
+    {
+        $status = [-1 => '删除', 0 => '禁用', 1 => '正常', 2 => '待审核'];
+        return $status[$value];
+    }
+
+    /** http://127.0.0.1:8000/DataModel/scope
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function scope()
     {
 //        $result = UserModel::scope('male')->select();
@@ -270,6 +306,13 @@ class DataModel
         return json($result);
     }
 
+    public function scopeMale($query)
+    {
+        $query->where('gender', '男')
+            ->field('id,username,gender,email')
+            ->limit(5);
+    }
+
     /** http://127.0.0.1:8000/DataModel/search
      * @return \think\response\Json
      * @throws \think\db\exception\DataNotFoundException
@@ -281,8 +324,8 @@ class DataModel
         $result = UserModel::withSearch(
             ['email', 'create_time' => 'ctime'],
             ['email' => 'xiao', 'ctime' => ['2014-1-1', '2017-1-1'],
-            'sort' => ['price' => 'desc']
-        ])->where('gender', '男')->select();
+                'sort' => ['price' => 'desc']
+            ])->where('gender', '男')->select();
 
         //return Db::getLastSql();
         return json($result->hidden(['username', 'details'])
@@ -292,6 +335,29 @@ class DataModel
                 return strtoupper($value);
             }));
     }
+
+    public function scopeEmail($query, $value)
+    {
+        $query->where('email', 'like', '%' . $value . '%');
+        $result = UserModel::scope('email', 'xiao')->select();
+        //$result = UserModel::email('xiao')->select();
+        return json($result);
+    }
+
+
+// 也可以实现多个查询封装方法连缀调用，比如找出邮箱 xiao 并大于 80 分的；
+    public function scopePrice($query, $value)
+    {
+        $query->where('price', '>', $value);
+        $result = UserModel::scope('email', 'xiao')
+            ->scope('price', 80)
+            ->select();
+        //$result = UserModel::email('xiao')
+        // ->price(80)
+        // ->select();
+        return json($result);
+    }
+
 
     /** int(0) string(5) "70.00" string(19) "2016-06-27 16:55:56"
      * @throws \think\db\exception\DataNotFoundException
