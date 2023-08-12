@@ -12,9 +12,13 @@ class Rely
         $this->request = $request;
     }
 
+    /** http://127.0.0.1:8000/Rely/index?username=%E5%8D%83%E7%BE%BD
+     * @param Request $request
+     * @return mixed
+     */
     public function index(Request $request)
     {
-        //return $_GET['username'];
+        return $_GET['username'];
         //return $request->param('username');
     }
 
