@@ -5,6 +5,10 @@ use app\common\Shut;
 use app\model\User;
 use think\facade\View;
 
+/** http://127.0.0.1:8000/Show
+ * Class Show
+ * @package app\controller
+ */
 class Show extends BaseController
 {
     public $name = 'Mr.Lee';
@@ -15,18 +19,18 @@ class Show extends BaseController
     {
 
         //$shut->run();
-        $this->app->shut->run();
+//        $this->app->shut->run();
         //app()->shut->run();
 
 
         //View::assign('name', 'Mr.Lee');
-        View::assign([
-            'name'  =>  'Mr.Lee',
-            'email' =>  'lee@163.com'
-        ]);
-//        return View::fetch('index', [
+//        View::assign([
 //            'name'  =>  'Mr.Lee',
 //            'email' =>  'lee@163.com'
+//        ]);
+//        return View::fetch('index', [
+//            'name'  =>  '千羽',
+//            'email' =>  'nateshao@163.com'
 //        ]);
 
 //        return view('index', [
@@ -49,7 +53,7 @@ class Show extends BaseController
         //return View::fetch('/index');
         //return View::fetch('../public/test/test');
 
-
+        // 推荐
         return View::engine('php')->fetch('index', [
             'name'  =>  'Mr.Lee',
             'email' =>  'lee@163.com'

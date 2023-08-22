@@ -24,14 +24,14 @@ class Rely
 
     public function get($id = 0)
     {
-        //return $this->request->param('username');
-        //return Request::param('username');
-        //return request()->param('username');
-        //return Request::url(true);
-        //return Request::root(true);
-        //return Request::controller().'|'.Request::action();
+//        return $this->request->param('username');
+//        return Request::param('username');
+//        return request()->param('username');  // http://127.0.0.1:8000/Rely/get?username=1
+//        return Request::url(true); // http://127.0.0.1:8000/Rely/get?username=1
+//        return Request::root(true); // http://127.0.0.1:8000
+//        return Request::controller().'|'.Request::action(); // Rely|get
 
-        //dump(Request::has('name', 'get'));
+//        dump(Request::has('name', 'get')); // check返回
         //ump(Request::param('name', '', 'strtoupper,htmlspecialchars'));
         //dump(Request::param());
         //dump(Request::param(false));

@@ -989,13 +989,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/top-think/think-view/zipball/edce0ae2c9551ab65f9e94a222604b0dead3576d",
                 "reference": "edce0ae2c9551ab65f9e94a222604b0dead3576d",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "shasum": ""
             },
             "require": {
                 "php": ">=7.1.0",
@@ -1018,6 +1012,10 @@
                 }
             ],
             "description": "thinkphp template driver",
+            "support": {
+                "issues": "https://github.com/top-think/think-view/issues",
+                "source": "https://github.com/top-think/think-view/tree/v1.0.14"
+            },
             "time": "2019-11-06T11:40:13+00:00"
         }
     ],
@@ -1292,5 +1290,6 @@
     "platform": {
         "php": ">=7.1.0"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }

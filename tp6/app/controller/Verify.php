@@ -60,7 +60,7 @@ class Verify
 
             //'test'      =>      ValidateRule::number()
             //'test'      =>      ValidateRule::isNumber()
-            //'test'      =>      'chs'
+//            'test'      =>      'chs'
             //'test'      =>      ValidateRule::isChs()
 
             //test区间长度
@@ -75,7 +75,7 @@ class Verify
             //'test'      =>      'confirm:price'
 
             //和表的字段比较
-            'username'      =>      'unique:user'
+//            'username'      =>      'unique:user'
 
         ]);
 
@@ -86,7 +86,7 @@ class Verify
 
         $validate = $validate->rule([
             'name'  =>  function ($value) {
-                return $value != '' ? true : '姓名不得为空';
+                return $value != '' ? true : '姓username已存在名不得为空';
             }
         ]);
 
